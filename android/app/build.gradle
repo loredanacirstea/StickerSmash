@@ -86,9 +86,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.loredanacirstea.StickerSmash'
+    namespace 'dev.provable.StickerSmash'
     defaultConfig {
-        applicationId 'com.loredanacirstea.StickerSmash'
+        applicationId 'dev.provable.StickerSmash'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

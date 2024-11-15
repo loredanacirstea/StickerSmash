@@ -4,8 +4,22 @@ import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import * as Linking from 'expo-linking';
 
 export default function HomeScreen() {
+  const url = Linking.useURL();
+  const linkUrl = Linking.useLinkingURL();
+  console.log("Home-url", url);
+  console.log("Home-linkUrl", linkUrl);
+  if (url) {
+    const { hostname, path, queryParams } = Linking.parse(url);
+
+    console.log(
+      `Home-Linked to app with hostname: ${hostname}, path: ${path} and data: ${JSON.stringify(
+        queryParams
+      )}`
+    );
+  }
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}

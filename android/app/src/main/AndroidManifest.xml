@@ -25,7 +25,7 @@
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
         <data android:scheme="myapp"/>
-        <data android:scheme="com.loredanacirstea.StickerSmash"/>
+        <data android:scheme="dev.provable.StickerSmash"/>
       </intent-filter>
     </activity>
   </application>

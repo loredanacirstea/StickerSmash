@@ -10,14 +10,14 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.loredanacirstea.StickerSmash"
+      "bundleIdentifier": "dev.provable.StickerSmash"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.loredanacirstea.StickerSmash"
+      "package": "dev.provable.StickerSmash"
     },
     "web": {
       "bundler": "metro",

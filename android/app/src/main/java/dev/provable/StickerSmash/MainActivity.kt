@@ -1,4 +1,4 @@
-package com.loredanacirstea.StickerSmash
+package dev.provable.StickerSmash
 import expo.modules.splashscreen.SplashScreenManager
 
 import android.os.Build

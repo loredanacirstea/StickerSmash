@@ -5,6 +5,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
+import * as Linking from 'expo-linking';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 
@@ -16,6 +17,19 @@ export default function RootLayout() {
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
+  const url = Linking.useURL();
+  const linkUrl = Linking.useLinkingURL();
+  console.log("url", url);
+  console.log("linkUrl", linkUrl);
+  if (url) {
+    const { hostname, path, queryParams } = Linking.parse(url);
+
+    console.log(
+      `Linked to app with hostname: ${hostname}, path: ${path} and data: ${JSON.stringify(
+        queryParams
+      )}`
+    );
+  }
 
   useEffect(() => {
     if (loaded) {

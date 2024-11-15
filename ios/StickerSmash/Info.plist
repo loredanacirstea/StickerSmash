@@ -28,7 +28,7 @@
         <key>CFBundleURLSchemes</key>
         <array>
           <string>myapp</string>
-          <string>com.loredanacirstea.StickerSmash</string>
+          <string>dev.provable.StickerSmash</string>
         </array>
       </dict>
     </array>

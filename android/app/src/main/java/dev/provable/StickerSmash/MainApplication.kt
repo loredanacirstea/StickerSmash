@@ -1,4 +1,4 @@
-package com.loredanacirstea.StickerSmash
+package dev.provable.StickerSmash
 
 import android.app.Application
 import android.content.res.Configuration
