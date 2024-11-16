@@ -4,15 +4,15 @@ import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import * as Linking from 'expo-linking';
+import {useURL, useLinkingURL, parse } from 'expo-linking';
 
 export default function HomeScreen() {
-  const url = Linking.useURL();
-  const linkUrl = Linking.useLinkingURL();
+  const url = useURL();
+  const linkUrl = useLinkingURL();
   console.log("Home-url", url);
   console.log("Home-linkUrl", linkUrl);
   if (url) {
-    const { hostname, path, queryParams } = Linking.parse(url);
+    const { hostname, path, queryParams } = parse(url);
 
     console.log(
       `Home-Linked to app with hostname: ${hostname}, path: ${path} and data: ${JSON.stringify(

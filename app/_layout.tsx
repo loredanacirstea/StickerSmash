@@ -1,28 +1,28 @@
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
+import {preventAutoHideAsync, hideAsync} from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
-import * as Linking from 'expo-linking';
+import {useURL, useLinkingURL, parse } from 'expo-linking';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+preventAutoHideAsync();
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
-  const url = Linking.useURL();
-  const linkUrl = Linking.useLinkingURL();
+  const url = useURL();
+  const linkUrl = useLinkingURL();
   console.log("url", url);
   console.log("linkUrl", linkUrl);
   if (url) {
-    const { hostname, path, queryParams } = Linking.parse(url);
+    const { hostname, path, queryParams } = parse(url);
 
     console.log(
       `Linked to app with hostname: ${hostname}, path: ${path} and data: ${JSON.stringify(
@@ -33,7 +33,7 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (loaded) {
-      SplashScreen.hideAsync();
+      hideAsync();
     }
   }, [loaded]);
 
