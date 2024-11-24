@@ -19,17 +19,8 @@ export default function RootLayout() {
   });
   const url = useURL();
   const linkUrl = useLinkingURL();
-  console.log("url", url);
-  console.log("linkUrl", linkUrl);
-  if (url) {
-    const { hostname, path, queryParams } = parse(url);
-
-    console.log(
-      `Linked to app with hostname: ${hostname}, path: ${path} and data: ${JSON.stringify(
-        queryParams
-      )}`
-    );
-  }
+  console.log("--RootLayout url--", url);
+  console.log("--RootLayout linkUrl--", linkUrl);
 
   useEffect(() => {
     if (loaded) {
