@@ -1844,7 +1844,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - Yoga
   - SocketRocket (0.7.1)
-  - WeshnetExpo (1.0.2):
+  - WeshnetExpo (0.0.2):
     - ExpoModulesCore
   - Yoga (0.0.0)
 
@@ -1934,7 +1934,7 @@ DEPENDENCIES:
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
-  - "WeshnetExpo (from `../node_modules/@berty/weshnet-expo/ios`)"
+  - WeshnetExpo (from `../../../weshnet-expo/ios`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -2110,7 +2110,7 @@ EXTERNAL SOURCES:
   RNSVG:
     :path: "../node_modules/react-native-svg"
   WeshnetExpo:
-    :path: "../node_modules/@berty/weshnet-expo/ios"
+    :path: "../../../weshnet-expo/ios"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -2199,7 +2199,7 @@ SPEC CHECKSUMS:
   RNScreens: 2fe13c8d610ef2d9d5ace2e7d85b716ec0f5217c
   RNSVG: 536cd3c866c878faf72beaba166c8b02fe2b762b
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
-  WeshnetExpo: 63b9aec2b0cf4f119ab3682ffecfdf12bb922f21
+  WeshnetExpo: fd4c6aed2a11a0dbe0a39fe427a05fd8364b8f69
   Yoga: c5b0e913b5b3b4cde588227c1402e747797061f3
 
 PODFILE CHECKSUM: a139e755077d0bc9ec122476b6814bf642fcae1f
