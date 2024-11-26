@@ -6,7 +6,7 @@ import * as WeshnetExpo from "@berty/weshnet-expo";
 import * as protocolpb from '@berty/weshnet-expo/build/api/protocoltypes.pb';
 import * as base64 from "base64-js";
 import { ProtocolServiceClient } from '@berty/weshnet-expo/build/weshnet.types.gen';
-import { ownMetadata } from '@/components/utils';
+import { ownMetadata, uint8ArrayToHex } from '@/components/utils';
 
 export default function ChatScreen() {
     const navigation = useNavigation();
@@ -41,8 +41,14 @@ export default function ChatScreen() {
                 const shareInfo = await client.shareContact({});
                 console.log("--shareInfo--", shareInfo)
                 if (shareInfo?.encodedContact) {
-                    const encoded = base64.fromByteArray(shareInfo.encodedContact);
+                    // const encoded = base64.fromByteArray(shareInfo.encodedContact);
+                    const encoded = uint8ArrayToHex(shareInfo.encodedContact)
                     setEncodedContact(encoded);
+
+                    const decodedContact = await client.decodeContact({
+                        encodedContact: shareInfo.encodedContact
+                    });
+                    console.log("-shareInfo decoded-", decodedContact)
                 }
 
                 // @ts-ignore
@@ -142,7 +148,8 @@ export default function ChatScreen() {
     const handleShareQRCode = () => {
         if (!encodedContact) return;
 
-        const qrcodeUrl = `myapp://chatconnect?metadata=${ownMetadata}&contactrequest=${encodeURIComponent(encodedContact)}`;
+        // const qrcodeUrl = `myapp://chatconnect?metadata=${ownMetadata}&contactrequest=${encodeURIComponent(encodedContact)}`;
+        const qrcodeUrl = `myapp://chatconnect?metadata=${ownMetadata}&contactrequest=${encodedContact}`;
         console.log("--qrcodeUrl--", qrcodeUrl)
         navigation.navigate('qrcode', { props: { value: qrcodeUrl }});
     };

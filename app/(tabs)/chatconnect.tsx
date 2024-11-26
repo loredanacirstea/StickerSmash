@@ -6,7 +6,7 @@ import * as base64 from "base64-js";
 import * as protocolpb from '@berty/weshnet-expo/build/api/protocoltypes.pb';
 import { useRouter } from 'expo-router';
 import { TextEncoder } from 'text-encoding';
-import { ownMetadata } from '@/components/utils';
+import { hexToUint8Array, ownMetadata, uint8ArrayToHex } from '@/components/utils';
 
 export default function ChatConnectScreen() {
     const router = useRouter();
@@ -15,7 +15,7 @@ export default function ChatConnectScreen() {
     const { colors } = theme;
 
     // Get contactrequest from route params and decode if present
-    const contactrequest = route.params?.contactrequest ?
+    let contactrequest = route.params?.contactrequest ?
         decodeURIComponent(route.params.contactrequest) : null;
 
     const metadata = route.params?.metadata ?
@@ -24,7 +24,9 @@ export default function ChatConnectScreen() {
     const encoder = new TextEncoder(); // Default encoding is UTF-8
     const metadataarr = encoder.encode(metadata);
 
-    console.log("--ChatConnectScreen contactrequest--", metadata, contactrequest)
+    // contactrequest = "0a201e5663a5e4050a1c22136c866baeb1876d79d8afc2874b02a58d2aa7426f6278122050340d02f44ea9d4125a050267bb9a644cbfa25511bc027453e8adbbaea30964"
+
+    console.log("--ChatConnectScreen contactrequest-", metadata, contactrequest)
 
     const [isProcessing, setIsProcessing] = useState(false); // Add state for processing status
     const [error, setError] = useState<string | null>(null); // Add error state
@@ -45,12 +47,16 @@ export default function ChatConnectScreen() {
                 const info = await weshnetClient.serviceGetConfiguration({});
                 console.log("--info--", info)
 
-                const contactreq = decodeURIComponent(contactrequest)
+                // const contactreq = decodeURIComponent(contactrequest)
 
-                console.log("-contactreq-", contactreq)
+                // console.log("-contactreq-", contactreq)
 
                 // Decode the base64 contact request first
-                const decodedBase64 = base64.toByteArray(contactreq);
+                // const decodedBase64 = base64.toByteArray(contactreq);
+
+                const decodedBase64 = hexToUint8Array(contactrequest)
+
+                console.log("-contactreq decodedBase64-", decodedBase64)
 
                 // Decode the contact request
                 const decodedContact = await weshnetClient.decodeContact({
@@ -83,6 +89,7 @@ export default function ChatConnectScreen() {
                     })
 
                     console.log("--contactRequestSend---")
+                    // const contact = decodedContact.contact;
 
                     try {
                         const contactReq = await weshnetClient.contactRequestSend({
@@ -96,16 +103,55 @@ export default function ChatConnectScreen() {
                         setError(err instanceof Error ? err.message : 'Failed to send contact request');
                     }
 
-                    console.log("--groupMetadataList--")
+                    console.log("--receiver GroupInfo--")
+                    let groupInfo
+                    try {
+                        groupInfo = await weshnetClient.groupInfo({
+                            contactPk: contact.pk,
+                        });
+                        console.log("--receiver GroupInfo--", groupInfo)
+                    } catch (err) {
+                        console.error('Error receiver groupInfo request:', err);
+                        // setError(err instanceof Error ? err.message : 'Failed to accept contact request');
+                        return;
+                    }
 
-                    const metadataStream = await weshnetClient.groupMetadataList({
-                        groupPk: info.accountGroupPk, // decodedContact.contact.pk,
-                    })
-                    metadataStream.onMessage((rep, err) => {
-                        console.log("--metadataStream accountGroupPk onMessage--", err, rep);
+                    console.log("--receiver activate GroupInfo--", groupInfo.group)
+                    try {
+                        const rrr = await weshnetClient.activateGroup({
+                            groupPk: groupInfo.group.publicKey,
+                        });
+                        console.log("--receiver activate GroupInfo--", rrr)
+                    } catch (err) {
+                        console.error('Error receiver activate groupInfo request:', err);
+                        // setError(err instanceof Error ? err.message : 'Failed to accept contact request');
+                        return;
+                    }
 
-                    })
-                    await metadataStream.start();
+                    console.log("--receiver send appMessageSend --")
+                    try {
+                        const rrr = await weshnetClient.appMessageSend({
+                            groupPk: groupInfo.group.publicKey,
+                            payload: encoder.encode("hihi"),
+                        });
+                        console.log("--receiver send appMessageSend--", rrr)
+                    } catch (err) {
+                        console.error('Error receiver send appMessageSend:', err);
+                        // setError(err instanceof Error ? err.message : 'Failed to accept contact request');
+                        return;
+                    }
+
+                    // console.log("--groupMetadataList--")
+
+                    // const metadataStream = await weshnetClient.groupMetadataList({
+                    //     groupPk: info.accountGroupPk,
+                    //     // groupPk: decodedContact.contact.pk,
+                    // })
+                    // metadataStream.onMessage((rep, err) => {
+                    //     console.log("--metadataStream accountGroupPk onMessage--", err, rep);
+
+                    // })
+                    // await metadataStream.start();
 
                     // const metadataStream2 = await weshnetClient.groupMetadataList({
                     //     groupPk: decodedContact.contact.pk,

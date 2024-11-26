@@ -41,10 +41,16 @@
     <key>NSAppTransportSecurity</key>
     <dict>
       <key>NSAllowsArbitraryLoads</key>
-      <false/>
+      <true/>
       <key>NSAllowsLocalNetworking</key>
       <true/>
     </dict>
+    <key>NSBonjourServicesUsageDescription</key>
+    <string>This app requires access to local network services for Wi-Fi multicast.</string>
+    <key>NSLocalNetworkUsageDescription</key>
+    <string>Access to the local network is required for app functionality.</string>
+    <key>NSPrivacyTelephonyUsageDescription</key>
+    <string>Access to phone state is required for app functionality.</string>
     <key>NSUserActivityTypes</key>
     <array>
       <string>$(PRODUCT_BUNDLE_IDENTIFIER).expo.index_route</string>
